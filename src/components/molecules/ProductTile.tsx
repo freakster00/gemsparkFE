@@ -26,6 +26,7 @@ export const ProductTile: React.FC<{
                     alt={product.productName}
                     title={product.productName}
                 />
+               
             </Link>
             <Categories gap="0.5rem">
                 {product.collectionIds

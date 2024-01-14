@@ -9,6 +9,7 @@ import { ProductTile } from '@/src/components/molecules/ProductTile';
 import { ContentContainer } from '@/src/components/atoms/ContentContainer';
 import { getCollections } from '@/src/graphql/sharedQueries';
 import { MainGrid } from '@/src/components/atoms/MainGrid';
+import  PromptGenerator  from '@/src/components/organisms/promptGenerator';
 import { Hero } from '@/src/components/organisms/Hero';
 import { Stack } from '@/src/components/atoms/Stack';
 import { MainBar } from '@/src/components/organisms/MainBar';
@@ -19,7 +20,6 @@ import { SortOrder } from '@/src/zeus';
 
 export const Index: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = props => {
     const { t } = useTranslation('homepage');
-
     return (
         <Layout navigation={props.navigation} categories={props.categories} pageTitle={t('seo.home')}>
             <Main w100 column gap="4rem">
@@ -29,18 +29,22 @@ export const Index: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = p
                     h2={t('hero-h2')}
                     desc={t('hero-p')}
                     link="/collections/all"
-                    image={
-                        props.products.find(p => p.slug.includes('laptop'))?.productAsset?.preview ??
-                        (props.products[0]?.productAsset?.preview || '')
-                    }
+                    image="/images/homepage01.png"
+                    
                 />
+                <PromptGenerator />
                 <ContentContainer>
                     <Stack gap="4rem" column>
-                        <BestOf products={props.bestOf} />
+                        {/* <BestOf products={props.bestOf} /> */}
                         <MainBar title={t('most-wanted')} categories={props.categories} />
                         <MainGrid>
-                            {props.products.map(p => (
+                           
+                            {
+                            
+                            props.products.map(p => (
+                                <>
                                 <ProductTile collections={props.categories} product={p} key={p.slug} />
+                               </>
                             ))}
                         </MainGrid>
                     </Stack>

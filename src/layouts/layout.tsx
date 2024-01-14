@@ -47,7 +47,9 @@ export const Layout: React.FC<LayoutProps> = ({ pageTitle, children, categories,
                 variant={variant}
                 collection={collection}
             />
+            
             <Navigation navigation={navigation} categories={categories} />
+            
             <Stack w100 itemsCenter column>
                 {children}
             </Stack>

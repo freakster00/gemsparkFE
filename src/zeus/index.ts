@@ -3195,6 +3195,12 @@ query will once again return `null`. */
             { input: ResolverInputTypes['AuthenticationInput']; rememberMe?: boolean | undefined | null },
             ResolverInputTypes['AuthenticationResult'],
         ];
+        generateAiImages?:[
+            {
+                prompt:String;
+            },
+            
+        ]
         /** End the current authenticated session */
         logout?: ResolverInputTypes['Success'];
         registerCustomerAccount?: [
@@ -7357,6 +7363,8 @@ shipping method will apply to. */
         setCustomerForOrder: GraphQLTypes['SetCustomerForOrderResult'];
         /** Authenticates the user using the native authentication strategy. This mutation is an alias for `authenticate({ native: { ... }})` */
         login: GraphQLTypes['NativeAuthenticationResult'];
+
+        fetchGeneratedImages:GraphQLTypes[]
         /** Authenticates the user using a named authentication strategy */
         authenticate: GraphQLTypes['AuthenticationResult'];
         /** End the current authenticated session */

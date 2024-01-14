@@ -19,7 +19,7 @@ import { CurrencyCode, SortOrder } from '@/src/zeus';
 import styled from '@emotion/styled';
 import { Check, X } from 'lucide-react';
 import { InferGetStaticPropsType } from 'next';
-
+import { useRouter } from 'next/router';
 import { Trans, useTranslation } from 'next-i18next';
 import { ProductOptions } from '@/src/components/organisms/ProductOptions';
 import { Breadcrumbs } from '@/src/components/molecules/Breadcrumbs';
@@ -28,6 +28,8 @@ import { arrayToTree } from '@/src/util/arrayToTree';
 import { ProductPhotosPreview } from '@/src/components/organisms/ProductPhotosPreview';
 
 const ProductPage: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = props => {
+    const router = useRouter();
+    const { imageurl,prompt,usertoken } = router.query;
     const { product, variant, addingError, productOptionsGroups, handleOptionClick, handleBuyNow, handleAddToCart } =
         useProduct();
     const { t } = useTranslation('common');
@@ -42,17 +44,24 @@ const ProductPage: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = pr
             
             <ContentContainer>
                 <Wrapper column>
-                    <Breadcrumbs breadcrumbs={breadcrumbs} />
+                    {/* <Breadcrumbs breadcrumbs={breadcrumbs} /> */}
                     <Main gap="5rem">
                         <StickyLeft w100 itemsCenter justifyCenter gap="2.5rem">
-                            <ProductPhotosPreview
+                            {/* <ProductPhotosPreview
                                 featuredAsset={product?.featuredAsset}
                                 images={product?.assets}
                                 name={product?.name}
-                            />
+                            /> */}
+                             <iframe
+                            src={`http://127.0.0.1:5500/index.html?imageurl=${imageurl}&prompt=${prompt}&usertoken=${usertoken}`}
+                            width="750"
+                            height="600"
+                            frameBorder="0"
+                            allowFullScreen
+                          />
                         </StickyLeft>
                         <StyledStack column gap="2.5rem">
-                            <TH1>{product?.name}</TH1>
+                            {/* <TH1>{product?.name}</TH1> */}
                             {product && product.variants.length > 1 ? (
                                 <ProductOptions
                                     productOptionsGroups={productOptionsGroups}
@@ -60,21 +69,13 @@ const ProductPage: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = pr
                                     addingError={addingError}
                                 />
                             ) : (
-                                <FacetContainer gap="1rem">
-                                    {product?.facetValues.map(({ id, name }) => <Facet key={id}>{name}</Facet>)}
-                                </FacetContainer>
+                                <></>
                             )}
 
                             {variant && (
                                 <Stack justifyBetween itemsCenter>
                                     <Stack gap="1rem">
-                                        <TPriceBig>
-                                            {priceFormatter(
-                                                variant?.priceWithTax || 0,
-                                                variant?.currencyCode || CurrencyCode.USD,
-                                            )}
-                                        </TPriceBig>
-                                        <TPriceBig>{product?.variants[0].currencyCode}</TPriceBig>
+                                    The pricing for our jewelry designs will be determined after submission. The displayed designs are for preview and creative exploration purposes only. 
                                     </Stack>
                                 </Stack>
                             )}
@@ -108,20 +109,23 @@ const ProductPage: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = pr
                                     </TP>
                                 </StockInfo>
                             </Stack>
-                            <TP>{product?.description}</TP>
+                            <TP>Experience the pinnacle of innovation at our AI-powered jewelry emporium, where cutting-edge technologies converge to craft unparalleled designs.</TP>
+                            <TP>Your Prompt:</TP>
+                            <TP>{prompt}</TP>
                             {!variant ? null : Number(variant.stockLevel) <= 0 ? (
                                 <NotifyMeForm />
                             ) : (
                                 <Stack w100 gap="2.5rem" justifyBetween column>
-                                    <FullWidthSecondaryButton onClick={handleAddToCart}>
-                                        {t('add-to-cart')}
+                                    <FullWidthSecondaryButton >
+                                    Disclaimer: The AI-generated jewelry designs produced by this app are purely artistic creations generated by machine learning algorithms
                                     </FullWidthSecondaryButton>
-                                    <FullWidthButton onClick={handleBuyNow}>{t('buy-now')}</FullWidthButton>
+                                    <FullWidthButton >Happy creating!</FullWidthButton>
                                 </Stack>
                             )}
                         </StyledStack>
                     </Main>
-                    
+                    {/* <NewestProducts products={props.newestProducts.products.items} />
+                    <RelatedProductCollections collections={props?.collections} /> */}
                 </Wrapper>
             </ContentContainer>
         </Layout>

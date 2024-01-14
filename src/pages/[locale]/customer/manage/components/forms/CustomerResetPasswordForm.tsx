@@ -93,7 +93,13 @@ export const CustomerResetPasswordForm: React.FC<{ language: string }> = ({ lang
             }
 
             const { logout } = await storefrontApiMutation(language)({ logout: { success: true } });
-            if (logout.success) push('/customer/sign-in/');
+            if (logout.success) {
+                push('/customer/sign-in/');
+            localStorage.removeItem("authToken");
+            localStorage.clear();
+            const storedValue = localStorage.getItem("authToken");
+            console.log(storedValue);
+            }
         } catch (error) {
             setError('root', { message: tErrors('errors.backend.UNKNOWN_ERROR') });
         }

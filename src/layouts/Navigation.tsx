@@ -55,8 +55,18 @@ const entries = [
         hoverBgColor: 'lch(50% 0 0)',
     },
 ];
-
+import CollectionsSharpIcon from '@mui/icons-material/CollectionsSharp';
+import { useRouter } from 'next/router';
 export const Navigation: React.FC<NavigationProps> = ({ navigation, categories }) => {
+    const router = useRouter();
+    const displayDesigns=()=>{
+        if(isLogged){
+        router.push('/generated/');    
+        }
+        else{
+            router.push('/customer/sign-in/');
+        }
+    }
     const { isLogged, cart } = useCart();
     const navigationSearch = useNavigationSearch();
     const searchRef = useRef<HTMLDivElement>(null);
@@ -85,7 +95,7 @@ export const Navigation: React.FC<NavigationProps> = ({ navigation, categories }
 
     return (
         <>
-            <AnnouncementBar entries={entries} secondsBetween={5} />
+            {/* <AnnouncementBar entries={entries} secondsBetween={5} /> */}
             <StickyContainer>
                 <ContentContainer>
                     <Stack itemsCenter justifyBetween gap="5rem" w100>
@@ -119,6 +129,11 @@ export const Navigation: React.FC<NavigationProps> = ({ navigation, categories }
                             <LanguagePicker />
                             <UserMenu isLogged={isLogged} />
                             <CartDrawer activeOrder={cart} />
+                            <span onClick={displayDesigns}>
+                            <CollectionsSharpIcon fontSize='large'/>
+                            </span>
+                            
+                            
                         </Stack>
                     </Stack>
                 </ContentContainer>

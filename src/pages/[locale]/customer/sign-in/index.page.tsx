@@ -44,7 +44,8 @@ const SignIn: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = props =
     const onSubmit: SubmitHandler<LoginCustomerInputType> = async data => {
         const { emailAddress, password, rememberMe } = data;
         try {
-            const { login } = await storefrontApiMutation(props.language)({
+            
+            const resp = await storefrontApiMutation(props.language)({
                 login: [
                     { password, username: emailAddress, rememberMe },
                     {
@@ -65,7 +66,9 @@ const SignIn: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = props =
                     },
                 ],
             });
-
+            
+            const login=resp.login
+            
             if (login.__typename === 'CurrentUser') {
                 await fetchActiveOrder();
                 push('/customer/manage');

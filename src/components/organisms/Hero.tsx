@@ -28,8 +28,8 @@ export const Hero: React.FC<{
                     </Stack>
                     <HeroImage
                         src={optimizeImage({ size: 'popup', src: image })}
-                        alt="Aexol shop demo"
-                        title="Aexol shop demo"
+                        alt="Image Homepage"
+                        title="Homepage Image"
                     />
                 </Content>
             </ContentContainer>
@@ -49,7 +49,7 @@ const Main = styled(Stack)`
     padding: 15rem 0 20rem 0;
 `;
 const HeroImage = styled.img`
-    aspect-ratio: 2.2;
+    aspect-ratio: 1.3;
     object-fit: cover;
-    height: 24rem;
+    height: 56rem;
 `;

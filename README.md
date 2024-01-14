@@ -1,5 +1,17 @@
 # Vendure NextJS Storefront
-This is NextJS starter for Vendure. This is still in **alpha**, but feel free to read the concepts and run the store.
+This is NextJS starter for Vendure. This is still in Development, but feel free to read the concepts and run the store.
+
+## What is Vendure.io
+Vendure is
+
+a headless e-commerce platform. By "headless" we mean that it exposes all of its functionality via APIs. Specifically, Vendure features two GraphQL APIs: one for storefronts (Shop API) and the other for administrative functions (Admin API).
+
+These are the major parts of a Vendure application:
+
+    Server: The Vendure server is the part that handles requests coming in to the GraphQL APIs. It serves both the Shop API and Admin API, and can send jobs to the Job Queue to be processed by the Worker.
+    Worker: The Worker runs in the background and deals with tasks such as updating the search index, sending emails, and other tasks which may be long-running, resource-intensive or require retries.
+    Admin UI: The Admin UI is how shop administrators manage orders, customers, products, settings and so on. It is not actually part of the Vendure core, but is provided as a plugin (the AdminUiPlugin) which is installed for you in a standard Vendure installation. The Admin UI can be further extended to support custom functionality, as detailed in the Extending the Admin UI section
+    Storefront: With headless commerce, you are free to implement your storefront exactly as you see fit, unconstrained by the back-end, using any technologies that you like. To make this process easier, we have created a number of storefront starter kits, as well as guides on building a storefront.
 
 ## Installation
 
@@ -33,25 +45,6 @@ For the best experience of our demo, you need to apply some modifications into V
 
 Our demo of Vendure server (MinIO & Postgres & SMTP) can be found [here](https://github.com/aexol-studio/aexol-shop-backend) to see all changes.
 
-Here is a list of changes at Vendure server:
-
-- apply two collections `all` and `search`. Both of them should contain all products (or not? for cases with gift cards / shipping-protections)
-- add the stock level as number value not as enum values
-```ts
-export class ExactStockDisplayStrategy implements StockDisplayStrategy {
-  getStockLevel(
-    ctx: RequestContext,
-    productVariant: ProductVariant,
-    saleableStockLevel: number
-  ): string {
-    return saleableStockLevel.toString();
-  }
-}
-
-export const catalogOptions: VendureConfig["catalogOptions"] = {
-  stockDisplayStrategy: new ExactStockDisplayStrategy(),
-};
-```
 
 ## Zeus
 
@@ -62,77 +55,10 @@ We use zeus to provide Selectors for certain GraphQL query parts. You can think 
 In this starter, we follow a naming convention for pages that aligns with DDD (Domain-driven design) principles. Each page file is named using the format `page-name.page.tsx`, where `page-name` represents the name of the page or route. For example, the main page of your application could be named `index.page.tsx`.
 Using this naming convention helps maintain a clean and organized folder structure that reflects the structure of your application's domains or features. By separating pages into their respective folders and adopting a consistent naming convention, you can easily locate and manage your application's routes.
 
-## Internationalization with i18next
-
-In this project, we have integrated i18next to make it easy for you to create multi-language websites. Here's how we use i18next:
-
-1. **Translation Files**: We maintain separate JSON translation files for each supported language. These files contain translation keys and their corresponding localized text.
-   For example, you might find the English translation file for home page at `public/locales/en/homePage.json`
-
-2. **Locale Configuration**: We configure i18next to load the appropriate translation files based on the user's selected locale.
-
-3. **Integration with React**: We use the `next-i18next` package to integrate i18next with React components, making it seamless to access translations in your React components.
 
 ## Icons
 
 Lucide icons
-
-## Styles
-
-I really like tailwind - that's why we are building our own engine based on styled components with props like in tailwind. For example `Stack`:
-
-```tsx
-export const Stack = styled.div<BaseFlexParams>`
-    gap: ${p => p.gap || 0};
-    display: flex;
-    flex-direction: ${p => (p.column ? (p.reverse ? 'column-reverse' : 'column') : p.reverse ? 'row-reverse' : 'row')};
-    flex-wrap: ${p => (p.flexWrap ? 'wrap' : 'nowrap')};
-    justify-content: ${p =>
-        p.justifyBetween ? 'space-between' : p.justifyCenter ? 'center' : p.justifyEnd ? 'end' : 'start'};
-    align-items: ${p => (p.itemsCenter ? 'center' : 'initial')};
-`;
-```
-
-So you can use it as follows:
-```tsx
-<Stack column gap="2rem">
-  {children}
-</Stack>
-```
-
-## Theme
-Theming is provided by emotion and some generic functions.
-
-You can use values from the theme with `thv` function or standard emotion way.
-
-`thv.button.icon.front` returns function that consumes the theme and returns the value. It is a small shortcut frm `${p => p.theme}`
-
-```tsx
-import { thv } from '@/src/theme';
-import styled from '@emotion/styled';
-
-export const IconButton = styled.button<{ isActive?: boolean }>`
-    color: ${thv.button.icon.front};
-    border: 0;
-    border-radius: 100%;
-    font-weight: 600;
-    outline: 0;
-    width: 2.4rem;
-    height: 2.4rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: ${p => p.theme.button.icon.back || 'transparent'};
-    svg {
-        width: 2rem;
-        height: 2rem;
-    }
-    :hover {
-        box-shadow: none;
-    }
-`;
-
-```
 
 ## Useful Links
 
@@ -142,9 +68,6 @@ export const IconButton = styled.button<{ isActive?: boolean }>`
 - [React Documentation](https://reactjs.org/docs)
 - [TypeScript Documentation](https://www.typescriptlang.org/docs)
 
-## Who?
-
-We are contributors to the GraphQL Ecosystem so far and we want to enter vendure.
 
 ## Roadmap
 
@@ -157,8 +80,4 @@ We are contributors to the GraphQL Ecosystem so far and we want to enter vendure
 - [X] Basic User Profile
 - [X] Search products
 - [X] Filters
-- [ ] Localization with devtranslate.app
-- [ ] Adding Static Git CMS MDTX
 - [ ] Configure SEO and schema.org for every site
-- [ ] Assure ISR ready on every sub site
-- [ ] Migrate to the new next router

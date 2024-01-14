@@ -21,7 +21,7 @@ export const DEFAULT_LANGUAGE = 'en';
 export const DEFAULT_CHANNEL = 'default-channel';
 //use 'http://localhost:3000/shop-api/' in local .env file for localhost development and provide env to use on prod/dev envs
 
-export const VENDURE_HOST = `${process.env.NEXT_PUBLIC_HOST || 'https://vendure-dev.aexol.com'}/shop-api`;
+export const VENDURE_HOST = `${process.env.NEXT_PUBLIC_HOST || 'http://localhost:3000'}/shop-api`;
 
 const apiFetchVendure =
     (options: fetchOptions) =>
@@ -51,6 +51,9 @@ const apiFetchVendure =
             .then(r => {
                 const authToken = r.headers.get('vendure-auth-token');
                 if (authToken != null) {
+                    const key = 'authToken';
+                    const value = authToken;
+                    localStorage.setItem(key, value);
                     token = authToken;
                 }
                 return handleFetchResponse(r);

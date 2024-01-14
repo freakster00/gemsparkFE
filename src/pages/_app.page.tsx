@@ -10,11 +10,13 @@ import { CartProvider } from '@/src/state/cart';
 import { CheckoutProvider } from '@/src/state/checkout';
 import { ProductProvider } from '@/src/state/product';
 import { CollectionProvider } from '@/src/state/collection';
+import { ChakraProvider } from '@chakra-ui/react'
 
 const sans = Noto_Sans_HK({ subsets: ['latin'] });
 
 const App = ({ Component, pageProps }: AppProps) => {
     return (
+        <ChakraProvider>
         <ThemeProvider theme={LightTheme}>
             <Global styles={`body { font-family:${sans.style.fontFamily}; }`} />
             {/* `checkout` prop should exist only on routes with checkout functionally */}
@@ -47,6 +49,7 @@ const App = ({ Component, pageProps }: AppProps) => {
                 </CartProvider>
             )}
         </ThemeProvider>
+        </ChakraProvider>
     );
 };
 

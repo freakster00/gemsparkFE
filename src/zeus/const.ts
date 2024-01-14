@@ -67,6 +67,7 @@ export const AllTypesProps: Record<string,any> = {
 		setCustomerForOrder:{
 			input:"CreateCustomerInput"
 		},
+		generateAiImages:{},
 		login:{
 
 		},
